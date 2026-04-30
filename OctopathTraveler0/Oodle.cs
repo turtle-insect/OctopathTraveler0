@@ -6,48 +6,49 @@ using System.Text;
 namespace OctopathTraveler0
 {
 	// Special Thank's
-	// https://github.com/Tamely/Oodle-Tools
-	// https://github.com/mistydemeo/quickbms/blob/master/included/oodle.c
+	// UE_5.7\Engine\Source\Programs\Shared\EpicGames.Oodle\Oodle.cs
 
 	internal class Oodle
 	{
 		[DllImport("oo2core_9_win64.dll", CallingConvention = CallingConvention.Cdecl)]
 		// return file size?
-		private static extern int OodleLZ_Compress(
-			int algo,
-			byte[] src_buffer,
-			int src_length,
-			byte[] dest_buffer,
-			int comp_level,
-			uint a,
-			uint b,
-			uint c
+		private static extern long OodleLZ_Compress(
+			int compressor,
+			byte[] rawBuf,
+			long rawLen,
+			byte[] compBuf,
+			int level,
+			long option,
+			IntPtr dictionaryBase,
+			IntPtr lrm,
+			IntPtr scratchMem,
+			long scratchSize
 		);
 
 		[DllImport("oo2core_9_win64.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int OodleLZ_Decompress(
-			byte[] src_buffer,
-			int src_length,
-			byte[] dest_buffer,
-			int dest_length,
-			int a,
-			int b,
-			int c,
-			IntPtr d,
-			int e,
-			IntPtr f,
-			IntPtr g,
-			IntPtr h,
-			int i,
-			int j
+			byte[] compBuf,
+			long compBufSize,
+			byte[] rawBuf,
+			long rawLen,
+			int fuzzSafe,
+			int checkCRC,
+			int verbosity,
+			IntPtr decBufBase,
+			long decBufSize,
+			long fpCallback,
+			long callbackUserData,
+			IntPtr decoderMemory,
+			long decoderMemorySize,
+			int threadPhase
 		);
 
 		public byte[] Compress(byte[] src)
 		{
-			int size = getMaxSize(src.Length);
+			long size = getMaxSize(src.Length);
 			byte[] dest = new byte[size];
-			size = OodleLZ_Compress(8, src, src.Length, dest, 9, 0, 0, 0);
-			return dest[..size];
+			size = OodleLZ_Compress(8, src, src.Length, dest, 9, 0, 0, 0, 0, 0);
+			return dest[..(int)size];
 		}
 
 		public byte[] Decompress(byte[] src, int dest_length)
@@ -57,7 +58,7 @@ namespace OctopathTraveler0
 			return dest;
 		}
 
-		private int getMaxSize(int size)
+		private long getMaxSize(int size)
 		{
 			return size + 274 * ((size + 0x3FFFF) / 0x400000);
 		}
