@@ -43,7 +43,8 @@ namespace OctopathTraveler0
 
 		public void Import(String filename)
 		{
-			if (String.IsNullOrEmpty(_filename)) return;
+			if (_buffer.Length == 0) return;
+			if (System.IO.File.Exists(filename) == false) return;
 
 			_buffer = System.IO.File.ReadAllBytes(filename);
 		}
