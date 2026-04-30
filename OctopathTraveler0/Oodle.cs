@@ -26,7 +26,7 @@ namespace OctopathTraveler0
 		);
 
 		[DllImport("oo2core_9_win64.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern int OodleLZ_Decompress(
+		private static extern long OodleLZ_Decompress(
 			byte[] compBuf,
 			long compBufSize,
 			byte[] rawBuf,
@@ -43,11 +43,18 @@ namespace OctopathTraveler0
 			int threadPhase
 		);
 
+		[DllImport("oo2core_9_win64.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern long OodleLZ_GetCompressedBufferSizeNeeded(
+			int compressor,
+			long rawSize
+		);
+
 		public byte[] Compress(byte[] src)
 		{
-			long size = getMaxSize(src.Length);
+			const int compressor = 8;
+			long size = OodleLZ_GetCompressedBufferSizeNeeded(compressor, src.Length);
 			byte[] dest = new byte[size];
-			size = OodleLZ_Compress(8, src, src.Length, dest, 9, 0, 0, 0, 0, 0);
+			size = OodleLZ_Compress(compressor, src, src.Length, dest, 9, 0, 0, 0, 0, 0);
 			return dest[..(int)size];
 		}
 
@@ -56,11 +63,6 @@ namespace OctopathTraveler0
 			byte[] dest = new byte[dest_length];
 			OodleLZ_Decompress(src, src.Length, dest, dest.Length, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3);
 			return dest;
-		}
-
-		private long getMaxSize(int size)
-		{
-			return size + 274 * ((size + 0x3FFFF) / 0x400000);
 		}
 	}
 }
