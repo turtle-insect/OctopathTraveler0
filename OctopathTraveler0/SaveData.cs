@@ -33,9 +33,11 @@ namespace OctopathTraveler0
 
 			Oodle oodle = new();
 			Byte[] comp = oodle.Compress(_buffer);
-			Byte[] buffer = new Byte[8 + comp.Length];
-			Array.Copy(BitConverter.GetBytes(_buffer.Length), buffer, 4);
-			Array.Copy(comp, 0, buffer, 8, comp.Length);
+			Byte[] buffer = [
+				.. BitConverter.GetBytes(_buffer.Length),
+				.. BitConverter.GetBytes(0),
+				.. comp
+			];
 
 			System.IO.File.WriteAllBytes(_filename, buffer);
 			return true;
