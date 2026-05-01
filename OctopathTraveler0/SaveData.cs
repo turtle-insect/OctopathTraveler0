@@ -58,6 +58,7 @@
 		{
 			if (_buffer.Length == 0) return 0;
 			if (address + size > _buffer.Length) return 0;
+
 			uint result = 0;
 			for (int i = 0; i < size; i++)
 			{
@@ -70,6 +71,7 @@
 		{
 			if (_buffer.Length == 0) return;
 			if (address + size > _buffer.Length) return;
+
 			for (uint i = 0; i < size; i++)
 			{
 				_buffer[address + i] = (Byte)(value & 0xFF);
@@ -81,8 +83,10 @@
 		{
 			List<uint> result = new List<uint>();
 			if (_buffer.Length == 0) return result;
+			if (_buffer.Length < name.Length) return result;
 
-			for (; index < _buffer.Length; index++)
+			uint max = (uint)_buffer.Length - (uint)name.Length + 1;
+			for (; index < max; index++)
 			{
 				if (_buffer[index] != name[0]) continue;
 
