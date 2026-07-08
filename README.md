@@ -16,7 +16,7 @@ https://store.steampowered.com/app/3014320
 # 実行に必要
 * Windows マシン
 * [.NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
-* ※`oo2core_9_win64.dll`
+* ※`oo2core.dll`
 * セーブデータの吸い出し
 * セーブデータの書き戻し
 
@@ -24,9 +24,9 @@ https://store.steampowered.com/app/3014320
 * Windows 11(64bit)
 * [Visual Studio 2026](https://visualstudio.microsoft.com/)
 
-# oo2core_9_win64.dll
+# oo2core.dll
 * [Epic Games Store](https://www.epicgames.com/)から `EpicInstaller` をダウンロード
 * Epic Games Launcherをインストール
-* Unreal Engine 5.7.4をインストール
-* Unreal Engineインストールフォルダで `oo2core_9_win64.dll` で検索
-* `oo2core_9_win64.dll` を実行ファイルと同じフォルダにコピー
+* Unreal Engine 5.8.0をインストール
+* Unreal Engineインストールフォルダで `oo2core.dll` で検索
+* `oo2core.dll` を実行ファイルと同じフォルダにコピー
