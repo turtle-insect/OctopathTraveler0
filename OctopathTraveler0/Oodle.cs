@@ -3,11 +3,11 @@
 namespace OctopathTraveler0
 {
 	// Special Thank's
-	// UE_5.7\Engine\Source\Programs\Shared\EpicGames.Oodle\Oodle.cs
+	// UE_5.8\Engine\Source\Programs\Shared\EpicGames.Oodle\Oodle.cs
 
 	internal class Oodle
 	{
-		[DllImport("oo2core_9_win64.dll", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("oo2core.dll", CallingConvention = CallingConvention.Cdecl)]
 		// return file size?
 		private static extern long OodleLZ_Compress(
 			int compressor,
@@ -22,7 +22,7 @@ namespace OctopathTraveler0
 			long scratchSize
 		);
 
-		[DllImport("oo2core_9_win64.dll", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("oo2core.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern long OodleLZ_Decompress(
 			byte[] compBuf,
 			long compBufSize,
@@ -40,7 +40,7 @@ namespace OctopathTraveler0
 			int threadPhase
 		);
 
-		[DllImport("oo2core_9_win64.dll", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("oo2core.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern long OodleLZ_GetCompressedBufferSizeNeeded(
 			int compressor,
 			long rawSize
